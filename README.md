@@ -1,5 +1,5 @@
 ## Main FORK Information
-This fork based on commit `d496072c7e81a6e1cca406d73c0497393ef2725c` of [aerocube/selenoid](https://github.com/aerokube/selenoid) project, descributed under Apache Licence 2.0 licence. Fork made on 18/09/2025. 
+This fork based on commit `d496072c7e81a6e1cca406d73c0497393ef2725c` of [aerokube/selenoid](https://github.com/aerokube/selenoid) project, descributed under Apache Licence 2.0 licence. Fork made on 18/09/2025. 
 
 All further changes in this fork remain under Apache-2.0 Licence.
 
