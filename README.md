@@ -1,3 +1,9 @@
+## Main FORK Information
+This fork based on commit `d496072c7e81a6e1cca406d73c0497393ef2725c` of [aerocube/selenoid](https://github.com/aerokube/selenoid) project, descributed under Apache Licence 2.0 licence. Fork made on 18/09/2025. 
+
+All further changes in this fork remain under Apache-2.0 Licence.
+
+
 # Selenoid
 [![Build Status](https://github.com/aerokube/selenoid/workflows/build/badge.svg)](https://github.com/aerokube/selenoid/actions?query=workflow%3Abuild)
 [![Coverage](https://codecov.io/github/aerokube/selenoid/coverage.svg)](https://codecov.io/gh/aerokube/selenoid)
@@ -6,10 +12,10 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/aerokube/selenoid.svg)](https://hub.docker.com/r/aerokube/selenoid)
 [![StackOverflow Tag](https://img.shields.io/badge/stackoverflow-selenoid-orange.svg?style=flat)](https://stackoverflow.com/questions/tagged/selenoid)
 
-**UNMAINTAINED**. Consider https://aerokube.com/moon/latest as alternative.
-
 Selenoid is a powerful implementation of [Selenium](http://github.com/SeleniumHQ/selenium) hub using [Docker](https://docker.com/) containers to launch browsers.
 ![Selenoid Animation](docs/img/selenoid-animation.gif)
+
+
 
 ## Features
 
