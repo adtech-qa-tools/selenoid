@@ -1,1 +1,1 @@
-This product includes software developed by community and portions based on on commit d496072c7e81a6e1cca406d73c0497393ef2725c of aerocube/selenoid project, descributed under Apache Licence 2.0 licence. 
+This product includes software developed by community and portions based on on commit d496072c7e81a6e1cca406d73c0497393ef2725c of aerokube/selenoid project, descributed under Apache Licence 2.0 licence. 
