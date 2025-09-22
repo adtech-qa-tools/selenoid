@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+DOCKERHUB_REPOSITORY=qapropeller/selenoid
 
 docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-docker buildx build --pull --push -t "$GITHUB_REPOSITORY" -t "$GITHUB_REPOSITORY:$1" -t "qapropeller/selenoid:$1" --platform linux/amd64,linux/arm64 .
+docker buildx build --pull --push -t "$DOCKERHUB_REPOSITORY:$1" --platform linux/amd64,linux/arm64 .
