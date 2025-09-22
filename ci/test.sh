@@ -3,7 +3,7 @@
 set -e
 
 export GO111MODULE="on"
-go test -tags 's3 metadata' -v -race -coverprofile=coverage.txt -covermode=atomic -coverpkg github.com/aerokube/selenoid,github.com/aerokube/selenoid/session,github.com/aerokube/selenoid/config,github.com/aerokube/selenoid/protect,github.com/aerokube/selenoid/service,github.com/aerokube/selenoid/upload,github.com/aerokube/selenoid/info,github.com/aerokube/selenoid/jsonerror
+go test -tags 's3 metadata' -v -race -coverprofile=coverage.txt -covermode=atomic -coverpkg github.com/adtech-qa-tools/selenoid,github.com/adtech-qa-tools/selenoid/session,github.com/adtech-qa-tools/selenoid/config,github.com/adtech-qa-tools/selenoid/protect,github.com/adtech-qa-tools/selenoid/service,github.com/adtech-qa-tools/selenoid/upload,github.com/adtech-qa-tools/selenoid/info,github.com/adtech-qa-tools/selenoid/jsonerror
 
 go install golang.org/x/vuln/cmd/govulncheck@latest
 "$(go env GOPATH)"/bin/govulncheck -tags production ./...

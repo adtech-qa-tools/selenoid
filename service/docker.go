@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/aerokube/selenoid/info"
 	"github.com/docker/docker/api/types"
@@ -179,16 +180,67 @@ func (d *Docker) StartWithCancel() (*StartedService, error) {
 			}
 		}
 	}
-
-	stat, err := cl.ContainerInspect(ctx, browserContainerId)
-	if err != nil {
-		removeContainer(ctx, cl, requestId, browserContainerId)
-		return nil, fmt.Errorf("inspect container %s: %s", browserContainerId, err)
+	const (
+		inspectRetries = 10
+		inspectDelay   = 250 * time.Millisecond
+	)
+	var stat types.ContainerJSON
+	var serviceReady bool
+	for i := 0; i < inspectRetries; i++ {
+		inspectedStat, err := cl.ContainerInspect(ctx, browserContainerId)
+		if err != nil {
+			removeContainer(ctx, cl, requestId, browserContainerId)
+			return nil, fmt.Errorf("inspect container %s on attempt %d: %w", browserContainerId, i+1, err)
+		}
+		statBytes, jsonErr := json.MarshalIndent(inspectedStat, "", "  ")
+		if jsonErr != nil {
+			log.Printf("[%d] Failed to marshal container stat to JSON: %v", requestId, jsonErr)
+		} else {
+			log.Printf("[%d] Container stat on attempt %d:\n%s", requestId, i+1, string(statBytes))
+		}
+		// Hybrid check: ready condition depends on environment
+		var isReady bool
+		if d.InDocker {
+			// Mode "inside Docker": waiting for IP in common network.
+			if getContainerIP(d.Network, inspectedStat) != "" {
+				isReady = true
+			}
+		} else {
+			// Mode "on host": 3 variants:
+			if inspectedStat.HostConfig.NetworkMode.IsHost() {
+				// 1: Container is using host network (--net=host), ready immediately.
+				isReady = true
+			} else if d.Network != "" && d.Network != DefaultContainerNetwork {
+				// 2: User network (bridge), waiting for IP in this network.
+				if getContainerIP(d.Network, inspectedStat) != "" {
+					isReady = true
+				}
+			} else {
+				//3:  Network by default (bridge). Waiting for published port.
+				if portBindings, ok := inspectedStat.NetworkSettings.Ports[selenium]; ok && len(portBindings) > 0 && portBindings[0].HostPort != "" {
+					isReady = true
+				}
+			}
+		}
+		if isReady {
+			stat = inspectedStat
+			serviceReady = true
+			break
+		}
+		if i < inspectRetries-1 {
+			time.Sleep(inspectDelay)
+		}
 	}
-	_, ok := stat.NetworkSettings.Ports[selenium]
-	if !ok {
+	if !serviceReady {
 		removeContainer(ctx, cl, requestId, browserContainerId)
-		return nil, fmt.Errorf("no bindings available for %v", selenium)
+		ipExpected := d.InDocker || (d.Network != "" && d.Network != DefaultContainerNetwork)
+		var errMsg string
+		if ipExpected {
+			errMsg = fmt.Sprintf("service startup failed: container did not get an IP address in network '%s' after %d attempts", d.Network, inspectRetries)
+		} else {
+			errMsg = fmt.Sprintf("service startup failed: could not get a published port for %s after %d attempts", selenium.Port(), inspectRetries)
+		}
+		return nil, fmt.Errorf(errMsg)
 	}
 	servicePort := d.Service.Port
 	pc := map[string]nat.Port{
