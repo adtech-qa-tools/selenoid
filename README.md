@@ -58,7 +58,7 @@ Suitable for personal usage and in big clusters:
 
 ### Detailed Documentation and Free Support
 Maintained by a growing community:
-* Detailed [documentation](http://aerokube.com/selenoid/latest/)
+* Detailed [documentation](https://adtech-qa-tools.github.io/selenoid/latest/)
 * Telegram [support channel](https://t.me/aerokube)
 * Support by [email](mailto:support@aerokube.com)
 * StackOverflow [tag](https://stackoverflow.com/questions/tagged/selenoid)
@@ -66,7 +66,7 @@ Maintained by a growing community:
 
 ## Complete Guide & Build Instructions
 
-Complete reference guide (including building instructions) can be found at: http://aerokube.com/selenoid/latest/
+Complete reference guide (including building instructions) can be found at: https://adtech-qa-tools.github.io/selenoid/latest/
 
 ## Selenoid in Kubernetes
 
