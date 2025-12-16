@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/aerokube/selenoid/info"
 	"github.com/docker/docker/api/types"
@@ -240,7 +241,7 @@ func (d *Docker) StartWithCancel() (*StartedService, error) {
 		} else {
 			errMsg = fmt.Sprintf("service startup failed: could not get a published port for %s after %d attempts", selenium.Port(), inspectRetries)
 		}
-		return nil, fmt.Errorf(errMsg)
+		return nil, errors.New(errMsg)
 	}
 	servicePort := d.Service.Port
 	pc := map[string]nat.Port{
