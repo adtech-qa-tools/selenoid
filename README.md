@@ -3,6 +3,9 @@ This fork based on commit `d496072c7e81a6e1cca406d73c0497393ef2725c` of [aerokub
 
 All further changes in this fork remain under Apache-2.0 Licence.
 
+## Docker Hub
+https://hub.docker.com/r/adtechqatools/selenoid/tags
+
 
 # Selenoid
 [![Build Status](https://github.com/aerokube/selenoid/workflows/build/badge.svg)](https://github.com/aerokube/selenoid/actions?query=workflow%3Abuild)
